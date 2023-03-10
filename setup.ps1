@@ -9,8 +9,9 @@ function Update-Environment-Path {
 
 function Install-Program {	
 	param (
-		$ProgramName
-		$OverrideParams
+		[Parameter(Mandatory)]
+		[string]$ProgramName,
+		[string]$OverrideParams
 	)
 
 	if !($PSBoundParameters.ContainsKey('OverrideParams')) {
