@@ -106,7 +106,7 @@ Remove-Item $env:USERPROFILE'\Downloads\ghidra.zip'
 
 
 $URL = 'https://sourceforge.net/projects/regshot/files/latest/download'
-Invoke-WebRequest -UseBasicParsing -UserAgent "Wget" -Uri $URL -OutFile $env:USERPROFILE'\Downloads\regshot.zip'
+Invoke-WebRequest -UseBasicParsing -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox -Uri $URL -OutFile $env:USERPROFILE'\Downloads\regshot.zip'
 Expand-Archive -Path $env:USERPROFILE'\Downloads\regshot.zip' -DestinationPath $env:USERPROFILE'\Documents\regshot'
 Remove-Item $env:USERPROFILE'\Downloads\regshot.zip'
 
