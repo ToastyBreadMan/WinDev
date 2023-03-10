@@ -14,7 +14,7 @@ function Install-Program {
 		[string]$OverrideParams
 	)
 
-	if !($PSBoundParameters.ContainsKey('OverrideParams')) {
+	if (!$PSBoundParameters.ContainsKey('OverrideParams')) {
 		winget install --id $ProgramName --silent --accept-package-agreements --accept-source-agreements --disable-interactivity
 	}
 	else {
