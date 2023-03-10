@@ -28,6 +28,9 @@ if (!(New-Object Security.Principal.WindowsPrincipal([Security.Principal.Windows
 	return
 }
 
+# Apparently progress bars drastically slow WebRequest downloads
+$ProgressPreference = 'SilentlyContinue'
+
 # 
 # Dependencies
 #
@@ -97,15 +100,19 @@ $URL = (Invoke-WebRequest -UseBasicParsing -Uri $URL).Content | ConvertFrom-Json
 		Where-Object "browser_download_url" -Match '.zip' |
 		Select-Object -ExpandProperty "browser_download_url"
 
-Invoke-WebRequest -Uri $URL -OutFile $env:USERPROFILE'\Documents\ghidra.zip' -UseBasicParsing
+Invoke-WebRequest -Uri $URL -OutFile $env:USERPROFILE'\Downloads\ghidra.zip' -UseBasicParsing
 Expand-Archive -Path $env:USERPROFILE'\Downloads\ghidra.zip' -DestinationPath $env:USERPROFILE'\Documents\ghidra'
+Remove-Item $env:USERPROFILE'\Downloads\ghidra.zip'
 
 
 $URL = 'https://sourceforge.net/projects/regshot/files/latest/download'
 Invoke-WebRequest -UseBasicParsing -UserAgent "Wget" -Uri $URL -OutFile $env:USERPROFILE'\Downloads\regshot.zip'
 Expand-Archive -Path $env:USERPROFILE'\Downloads\regshot.zip' -DestinationPath $env:USERPROFILE'\Documents\regshot'
+Remove-Item $env:USERPROFILE'\Downloads\regshot.zip'
 
 
 # Pip programs
-
 pip install frida
+
+# Restore Progress bars to session
+$ProgressPreference = 'Continue'
