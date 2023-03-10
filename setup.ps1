@@ -9,9 +9,7 @@ function Update-Environment-Path {
 
 function Install-Program {	
 	param (
-		[Parameter(Mandatory)]
 		$ProgramName
-
 		$OverrideParams
 	)
 
