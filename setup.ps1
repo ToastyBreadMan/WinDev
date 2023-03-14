@@ -105,6 +105,17 @@ Expand-Archive -Path $env:USERPROFILE'\Downloads\ghidra.zip' -DestinationPath $e
 Remove-Item $env:USERPROFILE'\Downloads\ghidra.zip'
 
 
+$URL = "https://api.github.com/repos/trailofbits/winchecksec/releases/latest"
+$URL = (Invoke-WebRequest -UseBasicParsing -Uri $URL).Content | ConvertFrom-Json |
+		Select-Object -ExpandProperty "assets" |
+		Where-Object "browser_download_url" -Match 'windows.x64.Release.zip' |
+		Select-Object -ExpandProperty "browser_download_url"
+
+Invoke-WebRequest -Uri $URL -OutFile $env:USERPROFILE'\Downloads\winchecksec.zip' -UseBasicParsing
+Expand-Archive -Path $env:USERPROFILE'\Downloads\winchecksec.zip' -DestinationPath $env:USERPROFILE'\Documents\winchecksec'
+Remove-Item $env:USERPROFILE'\Downloads\winchecksec.zip'
+
+
 $URL = 'https://sourceforge.net/projects/regshot/files/latest/download'
 Invoke-WebRequest -UseBasicParsing -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox -Uri $URL -OutFile $env:USERPROFILE'\Downloads\regshot.zip'
 Expand-Archive -Path $env:USERPROFILE'\Downloads\regshot.zip' -DestinationPath $env:USERPROFILE'\Documents\regshot'
